@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlockCraft - M1 Voxel Core</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Courier New', Courier, monospace;
+      color: #fff;
+    }
+    #game-canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+    #crosshair {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 10;
+    }
+    #crosshair::before, #crosshair::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.85);
+      mix-blend-mode: difference;
+    }
+    #crosshair::before {
+      top: 7px;
+      left: 0;
+      width: 16px;
+      height: 2px;
+    }
+    #crosshair::after {
+      top: 0;
+      left: 7px;
+      width: 2px;
+      height: 16px;
+    }
+    #f3-overlay {
+      position: fixed;
+      top: 8px;
+      left: 8px;
+      font-size: 13px;
+      line-height: 1.35;
+      color: #e0e0e0;
+      text-shadow: 1px 1px 0 #000;
+      pointer-events: none;
+      z-index: 20;
+      white-space: pre;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 6px 8px;
+      border-radius: 2px;
+    }
+    #f3-overlay.hidden {
+      display: none;
+    }
+    #hotbar {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 4px;
+      background: rgba(20, 20, 20, 0.75);
+      padding: 4px;
+      border: 2px solid #555;
+      z-index: 15;
+      pointer-events: none;
+    }
+    .hotbar-slot {
+      width: 44px;
+      height: 44px;
+      border: 2px solid #3a3a3a;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .hotbar-slot.selected {
+      border-color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .hotbar-slot canvas {
+      width: 32px;
+      height: 32px;
+      image-rendering: pixelated;
+    }
+    .hotbar-key {
+      position: absolute;
+      top: 1px;
+      left: 3px;
+      font-size: 10px;
+      color: #aaa;
+      text-shadow: 1px 1px 0 #000;
+    }
+    #selected-item-label {
+      position: fixed;
+      bottom: 66px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: #fff;
+      text-shadow: 1px 1px 0 #000;
+      pointer-events: none;
+      z-index: 15;
+    }
+    #instructions-banner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #888;
+      padding: 20px 28px;
+      text-align: center;
+      z-index: 30;
+      cursor: pointer;
+    }
+    #instructions-banner.hidden {
+      display: none;
+    }
+    #instructions-banner h1 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #6f6;
+    }
+    #instructions-banner p {
+      font-size: 13px;
+      color: #ccc;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game-canvas"></canvas>
+  <div id="crosshair"></div>
+  <div id="f3-overlay"></div>
+  <div id="selected-item-label"></div>
+  <div id="hotbar"></div>
+  <div id="instructions-banner">
+    <h1>BlockCraft (M1 Voxel Core)</h1>
+    <p>Click anywhere to lock pointer</p>
+    <p>WASD: Move | Space: Jump / Up | Shift: Sneak / Down | F: Toggle Fly | C: Gamemode</p>
+    <p>Left Click (hold): Break Block | Right Click: Place Block | 1-9 / Scroll: Select Block</p>
+    <p>F3: Toggle Debug Overlay | [ / ]: Adjust Render Distance (4-16)</p>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
